@@ -7,7 +7,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [windows-latest]
-        build_type: [Release]
+        build_type: [Release, RelWithDebInfo]
         enable_ui: [on]
     steps:
     - uses: actions/checkout@v2
@@ -44,7 +44,6 @@ jobs:
         cmake -S . -B build -G Ninja \
           -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} \
           -DCMAKE_OSX_DEPLOYMENT_TARGET=10.9 \
-          -DENABLE_TESTS=ON \
           -DENABLE_UI=${{ matrix.enable_ui }} \
           -DENABLE_CCACHE=$enable_ccache
     - name: Compiling
@@ -55,4 +54,4 @@ jobs:
       uses: actions/upload-artifact@v3.1.2
       with:
         name: Windows_UI
-        path: build
+        path: build/bin/
